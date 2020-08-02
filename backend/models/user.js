@@ -48,19 +48,18 @@ userSchema
 	.set(function (password) {
 		this._password = password;
 		this.salt = uuidv1();
-		this.encrypt_password = securePassword(password);
+		this.encrypt_password = this.securePassword(password);
 	})
 	.get(function () {
 		return this._password;
 	});
 
-userSchema.method = {
+userSchema.methods = {
 	autheticate: function (plainpassword) {
 		return this.securePassword(plainpassword) === this.encrypt_password;
 	},
-
 	securePassword: function (plainpassword) {
-		if (!password) return '';
+		if (!plainpassword) return '';
 		try {
 			return crypto
 				.createHmac('sha256', this.salt)
@@ -69,7 +68,7 @@ userSchema.method = {
 		} catch (err) {
 			return '';
 		}
-	},
+	}
 };
 
 const User = mongoose.model('User', userSchema);
