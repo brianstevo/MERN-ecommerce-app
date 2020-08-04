@@ -36,8 +36,7 @@ app.listen(port, () => {
 });
 
 
-// 		"express-validator": "^6.2.0",
+
 // 		"formidable": "^1.2.1",
 // 		"i": "^0.3.6",
-// 		"jsonwebtoken": "^8.5.1",
 // 		"lodash": "^4.17.19",
