@@ -1,5 +1,7 @@
 const User = require('./../models/user');
-const { validationResult } = require('express-validator');
+const {
+	validationResult
+} = require('express-validator');
 const jwt = require('jsonwebtoken');
 const expressJwt = require('express-jwt');
 
@@ -28,7 +30,10 @@ exports.signup = async (req, res) => {
 };
 
 exports.signin = (req, res) => {
-	const { email, password } = req.body;
+	const {
+		email,
+		password
+	} = req.body;
 	const errors = validationResult(req);
 	if (!errors.isEmpty()) {
 		return res.status(400).json({
@@ -36,8 +41,7 @@ exports.signin = (req, res) => {
 		});
 	}
 
-	User.findOne(
-		{
+	User.findOne({
 			email,
 		},
 		(err, user) => {
@@ -51,8 +55,7 @@ exports.signin = (req, res) => {
 					error: 'Email and password do not match',
 				});
 			}
-			const token = jwt.sign(
-				{
+			const token = jwt.sign({
 					_id: user._id,
 				},
 				process.env.SECRET
@@ -63,7 +66,12 @@ exports.signin = (req, res) => {
 			});
 
 			//send response to front end
-			const { _id, name, email, role } = user;
+			const {
+				_id,
+				name,
+				email,
+				role
+			} = user;
 			return res.json({
 				token,
 				user: {
@@ -85,24 +93,25 @@ exports.signout = (req, res) => {
 };
 
 //Protected routes
-
+//isSignedIn requires Bearer value(token)
 exports.isSignedIn = expressJwt({
 	secret: process.env.SECRET,
 	algorithms: ['HS256'],
-	userProperty: 'auth',
+	userProperty: 'auth', //contains _id received by Bearer value which is token generated
 });
 
 // custom middlewares
 exports.isAuthenticated = (req, res, next) => {
 	//profile is from frontend auth is from isSignedIm id will be in auth as well as profile
-	let checker = req.profile && req.auth && req.profile._id === req.auth._id;
-	if (!checker) {
+	let checker = req.profile && req.auth && req.profile._id == req.auth._id; //== not === because of object
+	if (!checker) { //== used to compare object values === doesnot work on object
 		return res.status(404).json({
 			error: 'Access denied',
 		});
 	}
 	next();
 };
+
 exports.isAdmin = (req, res, next) => {
 	if (!req.profile.role === 0) {
 		return res.status(403).json({
