@@ -5,9 +5,13 @@ const app = express();
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
+const morgan = require('morgan');
 
 const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
+const categoryRouter = require('./routes/category');
+const productRouter = require('./routes/product');
+
 
 mongoose
     .connect(process.env.DATABASE, {
@@ -26,11 +30,13 @@ mongoose
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(cors());
-
+app.use(morgan('dev'));
 //routes
 
 app.use('/api', authRouter);
 app.use('/api', userRouter);
+app.use('/api', categoryRouter);
+app.use('/api', productRouter);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
@@ -39,6 +45,5 @@ app.listen(port, () => {
 
 
 
-// 		"formidable": "^1.2.1",
+
 // 		"i": "^0.3.6",
-// 		"lodash": "^4.17.19",
