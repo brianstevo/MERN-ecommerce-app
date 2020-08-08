@@ -15,6 +15,8 @@ router.get("/products", productHandler.getAllProducts);
 //to load photo behind the scenes (async **)optimization
 router.get("/product/photo/:productId", productHandler.photo);
 
+router.get("/products/categories", productHandler.getAllUniqueCategories);
+
 router.post("/product/create/:userId", authHandler.isSignedIn, authHandler.isAuthenticated, authHandler.isAdmin, productHandler.createProduct);
 
 router.delete("/product/:productId/:userId", authHandler.isSignedIn, authHandler.isAuthenticated, authHandler.isAdmin, productHandler.deleteProduct);

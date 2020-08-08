@@ -11,6 +11,7 @@ const authRouter = require('./routes/auth');
 const userRouter = require('./routes/user');
 const categoryRouter = require('./routes/category');
 const productRouter = require('./routes/product');
+const orderRouter = require('./routes/order');
 
 
 mongoose
@@ -37,6 +38,7 @@ app.use('/api', authRouter);
 app.use('/api', userRouter);
 app.use('/api', categoryRouter);
 app.use('/api', productRouter);
+app.use('/api', orderRouter);
 
 const port = process.env.PORT || 8000;
 app.listen(port, () => {
