@@ -106,7 +106,7 @@ exports.isAuthenticated = (req, res, next) => {
 	let checker = req.profile && req.auth && req.profile._id == req.auth._id; //== not === because of object
 	if (!checker) { //== used to compare object values === doesnot work on object
 		return res.status(404).json({
-			error: 'Access denied',
+			error: 'Access denied not authenticated',
 		});
 	}
 	next();
