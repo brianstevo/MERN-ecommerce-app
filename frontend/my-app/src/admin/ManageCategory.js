@@ -1,24 +1,28 @@
 import React, { useState, useEffect } from "react";
 import Base from "../core/Base";
+import {
+	getAllCategory,
+	deleteCategory,
+	updateCategory,
+} from "./helper/adminapicall";
 import { Link } from "react-router-dom";
-import { getAllProduct, deleteProduct } from "./helper/adminapicall";
 import { isAuthenticated } from "../auth/helper";
 
-const ManageProducts = () => {
-	const [product, setProduct] = useState([]);
+const ManageCategory = () => {
+	const [category, setCategory] = useState([]);
 	const { user, token } = isAuthenticated();
 
 	const preload = async () => {
 		//backend request firing
 		try {
-			const data = await getAllProduct(); //name is sent like object so that stringify in fetch works
+			const data = await getAllCategory(); //name is sent like object so that stringify in fetch works
 			if (data.error) {
 				console.log(data.error);
 			} else {
-				setProduct(data);
+				setCategory(data);
 			}
 		} catch {
-			console.log("error in getting Product");
+			console.log("error in getting Category");
 		}
 	};
 
@@ -26,38 +30,37 @@ const ManageProducts = () => {
 		preload();
 	}, []);
 
-	const deleteThisProduct = async (productId) => {
+	const deleteThisCategory = async (categoryId) => {
 		try {
-			const data = await deleteProduct(productId, user._id, token); //name is sent like object so that stringify in fetch works
+			const data = await deleteCategory(categoryId, user._id, token); //name is sent like object so that stringify in fetch works
 			if (data.error) {
 				console.log(data.error);
 			} else {
 				preload();
 			}
 		} catch {
-			console.log("error in deleting product");
+			console.log("error in deleting category");
 		}
 	};
-
-	const getproduct = () => {
+	const getcategory = () => {
 		return (
 			<div className="card mb-1">
-				<h4 className="card-header">Product Information</h4>
+				<h4 className="card-header">Category Information</h4>
 				<ul className="list-group">
-					{product.map((ele, index) => {
+					{category.map((ele, index) => {
 						return (
-							<li key={index} className="list-group-item text-dark">
+							<li key={index} className="list-group-item">
 								{ele.name}
 								<Link
 									className="btn btn-success ml-5 mr-2 "
-									to={`/admin/product/update/${ele._id}`}
+									to={`/admin/category/update/${ele._id}`}
 								>
 									<span className="">Update</span>
 								</Link>
 								<span
-									className="btn  btn-danger"
+									className="btn btn-md btn-danger"
 									onClick={() => {
-										deleteThisProduct(ele._id);
+										deleteThisCategory(ele._id);
 									}}
 								>
 									Delete
@@ -69,19 +72,19 @@ const ManageProducts = () => {
 			</div>
 		);
 	};
+
 	const goBack = () => (
 		<div className="mt-4">
-			<Link className="btn btn-md btn-outline-dark" to="/admin/dashboard">
+			<Link className="btn btn-md btn-outline-light" to="/admin/dashboard">
 				Admin Home
 			</Link>
 		</div>
 	);
 	return (
 		<Base className="container bg-info p-4 mb-3">
-			{getproduct()}
+			{getcategory()}
 			{goBack()}
 		</Base>
 	);
 };
-
-export default ManageProducts;
+export default ManageCategory;

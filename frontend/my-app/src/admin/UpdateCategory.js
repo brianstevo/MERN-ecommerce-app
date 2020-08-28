@@ -1,14 +1,33 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { isAuthenticated } from "../auth/helper";
 import Base from "../core/Base";
-import { createCategory } from "../admin/helper/adminapicall";
+import { updateCategory, getCategory } from "../admin/helper/adminapicall";
 
-const AddCategory = () => {
+const UpdateCategory = ({ match }) => {
 	const [name, setName] = useState("");
 	const [error, setError] = useState(false);
 	const [success, setSuccess] = useState(false);
 	const { user, token } = isAuthenticated();
+
+	const preload = async (categoryId) => {
+		//backend request firing
+		try {
+			const data = await getCategory(categoryId); //name is sent like object so that stringify in fetch works
+			if (data.error) {
+				setError(data.error);
+			} else {
+				setError("");
+				setName(data.name);
+			}
+		} catch {
+			console.log("error in getting Category");
+		}
+	};
+
+	useEffect(() => {
+		preload(match.params.categoryId);
+	}, []);
 
 	const handleChange = (event) => {
 		setError("");
@@ -21,13 +40,18 @@ const AddCategory = () => {
 		setSuccess(false);
 		//backend request firing
 		try {
-			const data = await createCategory(user._id, token, { name }); //name is sent like object so that stringify in fetch works
+			const data = await updateCategory(
+				match.params.categoryId,
+				user._id,
+				token,
+				{ name }
+			); //name is sent like object so that stringify in fetch works
 			if (data.error) {
 				setError(true);
 			} else {
 				setError("");
 				setSuccess(true);
-				setName("");
+				setName(data.name);
 			}
 		} catch {
 			console.log("error in createCategory");
@@ -38,7 +62,7 @@ const AddCategory = () => {
 		if (success) {
 			return (
 				<h4 className="alert alert-success mt-2">
-					Category created successfully
+					Category update successfully
 				</h4>
 			);
 		}
@@ -74,7 +98,7 @@ const AddCategory = () => {
 					placeholder="For Ex. Summer"
 				/>
 				<button onClick={Submit} className="btn btn-outline-info">
-					Create Category
+					Update Category
 				</button>
 			</div>
 		</form>
@@ -97,4 +121,4 @@ const AddCategory = () => {
 		</Base>
 	);
 };
-export default AddCategory;
+export default UpdateCategory;
