@@ -8,13 +8,14 @@ const categoryHandler = require("../controllers/category");
 router.param("userId", userHandler.getUserById); //param userId should be matching with :userId otherwise middleware getUserById wont trigger
 router.param("categoryId", categoryHandler.getCategoryById);
 
-router.post(
-	"/category/create/:userId",
-	authHandler.isSignedIn,
-	authHandler.isAuthenticated,
-	authHandler.isAdmin,
-	categoryHandler.createCategory
-);
+// router.post(
+// 	"/category/create/:userId",
+// 	authHandler.isSignedIn,
+// 	authHandler.isAuthenticated,
+// 	authHandler.isAdmin,
+// 	categoryHandler.createCategory
+// );
+router.post("/category/create", categoryHandler.createCategory);
 router.get("/category/:categoryId", categoryHandler.getCategory);
 router.get("/category", categoryHandler.getAllCategory);
 
