@@ -11,10 +11,9 @@ const userRouter = require("./routes/user");
 const categoryRouter = require("./routes/category");
 const productRouter = require("./routes/product");
 const orderRouter = require("./routes/order");
-const DB =
-	"mongodb+srv://brianstevo:root@t-shirt-db.86m3s.mongodb.net/mern-tshirt?retryWrites=true&w=majority";
+
 mongoose
-	.connect(process.env.DATABASE || DB, {
+	.connect(process.env.DATABASE, {
 		useNewUrlParser: true,
 		useUnifiedTopology: true,
 		useCreateIndex: true,
