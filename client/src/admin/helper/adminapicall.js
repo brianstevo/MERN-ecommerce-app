@@ -2,7 +2,7 @@ const { API } = require("../../backend");
 
 export const createCategory = async (userId, token, category) => {
 	try {
-		const response = await fetch(`${API}/category/create/${userId}`, {
+		const response = await fetch(`${API}/category/create`, {
 			method: "POST",
 			headers: {
 				Accept: "application/json",
