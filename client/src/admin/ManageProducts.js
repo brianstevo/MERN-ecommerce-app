@@ -6,7 +6,7 @@ import { isAuthenticated } from "../auth/helper";
 
 const ManageProducts = () => {
 	const [product, setProduct] = useState([]);
-	const { user, token } = isAuthenticated();
+	const { token } = isAuthenticated();
 
 	const preload = async () => {
 		//backend request firing
@@ -28,7 +28,7 @@ const ManageProducts = () => {
 
 	const deleteThisProduct = async (productId) => {
 		try {
-			const data = await deleteProduct(productId, user._id, token); //name is sent like object so that stringify in fetch works
+			const data = await deleteProduct(productId, token); //name is sent like object so that stringify in fetch works
 			if (data.error) {
 				console.log(data.error);
 			} else {

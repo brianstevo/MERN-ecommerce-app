@@ -1,10 +1,9 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
 
-const userHandler = require('../controllers/user');
-const authHandler = require('./../controllers/auth');
-const productHandler = require('../controllers/product');
-
+const userHandler = require("../controllers/user");
+const authHandler = require("./../controllers/auth");
+const productHandler = require("../controllers/product");
 
 router.param("userId", userHandler.getUserById); //param userId should be matching with :userId otherwise middleware getUserById wont trigger
 router.param("productId", productHandler.getProductById);
@@ -17,10 +16,10 @@ router.get("/product/photo/:productId", productHandler.photo);
 
 router.get("/products/categories", productHandler.getAllUniqueCategories);
 
-router.post("/product/create/:userId", authHandler.isSignedIn, authHandler.isAuthenticated, authHandler.isAdmin, productHandler.createProduct);
+router.post("/product/create", productHandler.createProduct);
 
-router.delete("/product/:productId/:userId", authHandler.isSignedIn, authHandler.isAuthenticated, authHandler.isAdmin, productHandler.deleteProduct);
+router.delete("/product/:productId", productHandler.deleteProduct);
 
-router.put("/product/:productId/:userId", authHandler.isSignedIn, authHandler.isAuthenticated, authHandler.isAdmin, productHandler.updateProduct);
+router.put("/product/:productId", productHandler.updateProduct);
 
 module.exports = router;

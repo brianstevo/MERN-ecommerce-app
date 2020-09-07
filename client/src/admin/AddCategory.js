@@ -8,7 +8,7 @@ const AddCategory = () => {
 	const [name, setName] = useState("");
 	const [error, setError] = useState(false);
 	const [success, setSuccess] = useState(false);
-	const { user, token } = isAuthenticated();
+	const { token } = isAuthenticated();
 
 	const handleChange = (event) => {
 		setError("");
@@ -21,7 +21,7 @@ const AddCategory = () => {
 		setSuccess(false);
 		//backend request firing
 		try {
-			const data = await createCategory(user._id, token, { name }); //name is sent like object so that stringify in fetch works
+			const data = await createCategory(token, { name }); //name is sent like object so that stringify in fetch works
 			if (data.error) {
 				setError(true);
 			} else {

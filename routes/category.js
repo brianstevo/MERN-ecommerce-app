@@ -19,19 +19,7 @@ router.post("/category/create", categoryHandler.createCategory);
 router.get("/category/:categoryId", categoryHandler.getCategory);
 router.get("/category", categoryHandler.getAllCategory);
 
-router.put(
-	"/category/:categoryId/:userId",
-	authHandler.isSignedIn,
-	authHandler.isAuthenticated,
-	authHandler.isAdmin,
-	categoryHandler.updateCategory
-);
-router.delete(
-	"/category/:categoryId/:userId",
-	authHandler.isSignedIn,
-	authHandler.isAuthenticated,
-	authHandler.isAdmin,
-	categoryHandler.deleteCategory
-);
+router.put("/category/:categoryId", categoryHandler.updateCategory);
+router.delete("/category/:categoryId", categoryHandler.deleteCategory);
 
 module.exports = router;

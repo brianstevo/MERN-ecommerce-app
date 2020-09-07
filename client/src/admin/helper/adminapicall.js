@@ -1,6 +1,6 @@
 const { API } = require("../../backend");
 
-export const createCategory = async (userId, token, category) => {
+export const createCategory = async (token, category) => {
 	try {
 		const response = await fetch(`${API}/category/create`, {
 			method: "POST",
@@ -38,9 +38,9 @@ export const getCategory = async (categoryId) => {
 	}
 };
 
-export const updateCategory = async (categoryId, userId, token, category) => {
+export const updateCategory = async (categoryId, token, category) => {
 	try {
-		const response = await fetch(`${API}/category/${categoryId}/${userId}`, {
+		const response = await fetch(`${API}/category/${categoryId}`, {
 			method: "PUT",
 			headers: {
 				Accept: "application/json",
@@ -55,9 +55,9 @@ export const updateCategory = async (categoryId, userId, token, category) => {
 	}
 };
 
-export const deleteCategory = async (categoryId, userId, token) => {
+export const deleteCategory = async (categoryId, token) => {
 	try {
-		const response = await fetch(`${API}/category/${categoryId}/${userId}`, {
+		const response = await fetch(`${API}/category/${categoryId}`, {
 			method: "DELETE",
 			headers: {
 				Accept: "application/json",
@@ -71,9 +71,9 @@ export const deleteCategory = async (categoryId, userId, token) => {
 };
 
 //product calls
-export const createProduct = async (userId, token, product) => {
+export const createProduct = async (token, product) => {
 	try {
-		const response = await fetch(`${API}/product/create/${userId}`, {
+		const response = await fetch(`${API}/product/create`, {
 			method: "POST",
 			headers: {
 				Accept: "application/json",
@@ -109,9 +109,9 @@ export const getProduct = async (productId) => {
 	}
 };
 
-export const updateProduct = async (productId, userId, token, product) => {
+export const updateProduct = async (productId, token, product) => {
 	try {
-		const response = await fetch(`${API}/product/${productId}/${userId}`, {
+		const response = await fetch(`${API}/product/${productId}`, {
 			method: "PUT",
 			headers: {
 				Accept: "application/json",
@@ -125,9 +125,9 @@ export const updateProduct = async (productId, userId, token, product) => {
 	}
 };
 
-export const deleteProduct = async (productId, userId, token) => {
+export const deleteProduct = async (productId, token) => {
 	try {
-		const response = await fetch(`${API}/product/${productId}/${userId}`, {
+		const response = await fetch(`${API}/product/${productId}`, {
 			method: "DELETE",
 			headers: {
 				Accept: "application/json",

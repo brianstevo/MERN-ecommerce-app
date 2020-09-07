@@ -9,7 +9,7 @@ import {
 import { isAuthenticated } from "../auth/helper";
 
 const UpdateProduct = ({ match }) => {
-	const { user, token } = isAuthenticated();
+	const { token } = isAuthenticated();
 
 	const [values, setValues] = useState({
 		name: "",
@@ -80,24 +80,22 @@ const UpdateProduct = ({ match }) => {
 	const onSubmit = (event) => {
 		event.preventDefault();
 		setValues({ ...values, error: "", loading: true });
-		updateProduct(match.params.productId, user._id, token, formData).then(
-			(data) => {
-				if (data.error) {
-					setValues({ ...values, error: data.error });
-				} else {
-					setValues({
-						...values,
-						name: data.name,
-						description: data.description,
-						price: data.price,
-						stock: data.stock,
-						error: "",
-						photo: "",
-						createdProduct: data.name,
-					});
-				}
+		updateProduct(match.params.productId, token, formData).then((data) => {
+			if (data.error) {
+				setValues({ ...values, error: data.error });
+			} else {
+				setValues({
+					...values,
+					name: data.name,
+					description: data.description,
+					price: data.price,
+					stock: data.stock,
+					error: "",
+					photo: "",
+					createdProduct: data.name,
+				});
 			}
-		);
+		});
 	};
 
 	const handleChange = (name) => (event) => {

@@ -5,7 +5,7 @@ import { getAllCategory, createProduct } from "./helper/adminapicall";
 import { isAuthenticated } from "../auth/helper";
 
 const AddProduct = () => {
-	const { user, token } = isAuthenticated();
+	const { token } = isAuthenticated();
 
 	const [values, setValues] = useState({
 		name: "",
@@ -54,7 +54,7 @@ const AddProduct = () => {
 	const onSubmit = (event) => {
 		event.preventDefault();
 		setValues({ ...values, error: "", loading: true });
-		createProduct(user._id, token, formData).then((data) => {
+		createProduct(token, formData).then((data) => {
 			if (data.error) {
 				setValues({ ...values, error: data.error });
 			} else {

@@ -8,7 +8,7 @@ const UpdateCategory = ({ match }) => {
 	const [name, setName] = useState("");
 	const [error, setError] = useState(false);
 	const [success, setSuccess] = useState(false);
-	const { user, token } = isAuthenticated();
+	const { token } = isAuthenticated();
 
 	const preload = async (categoryId) => {
 		//backend request firing
@@ -40,12 +40,9 @@ const UpdateCategory = ({ match }) => {
 		setSuccess(false);
 		//backend request firing
 		try {
-			const data = await updateCategory(
-				match.params.categoryId,
-				user._id,
-				token,
-				{ name }
-			); //name is sent like object so that stringify in fetch works
+			const data = await updateCategory(match.params.categoryId, token, {
+				name,
+			}); //name is sent like object so that stringify in fetch works
 			if (data.error) {
 				setError(true);
 			} else {
