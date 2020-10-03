@@ -119,6 +119,7 @@ exports.isSignedIn = expressJwt({
 
 // custom middlewares
 exports.isAuthenticated = (req, res, next) => {
+	//profile is from getUserByID and auth is from isSignedIn
 	//profile is from frontend auth is from isSignedIm id will be in auth as well as profile
 	let checker = req.profile && req.auth && req.profile._id == req.auth._id; //== not === because of object
 	if (!checker) {

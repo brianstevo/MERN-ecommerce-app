@@ -69,7 +69,7 @@ export const signout = (next) => {
 };
 
 //check user is signed in or not
-export const isAuthenticated = (data, next) => {
+export const isAuthenticated = () => {
 	if (typeof window == "undefined") {
 		return false;
 	}

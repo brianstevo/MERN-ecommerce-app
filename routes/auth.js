@@ -1,44 +1,41 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const authHandler = require('./../controllers/auth');
-const { check } = require('express-validator');
+const authHandler = require("./../controllers/auth");
+const { check } = require("express-validator");
 
 router.post(
-	'/signup',
+	"/signup",
 	[
-		check('name')
+		check("name")
 			.isLength({
 				min: 3,
 			})
-			.withMessage('name must be at least 3 chars long'),
-		check('email').isEmail().withMessage('email is required'),
-		check('password')
+			.withMessage("name must be at least 3 chars long"),
+		check("email").isEmail().withMessage("email is required"),
+		check("password")
 			.isLength({
 				min: 5,
 			})
-			.withMessage('Password must be at least 5 chars long')
+			.withMessage("Password must be at least 5 chars long")
 			.matches(/\d/)
-			.withMessage('Password must contain a number'),
+			.withMessage("Password must contain a number"),
 	],
 	authHandler.signup
 );
 
 router.post(
-	'/signin',
+	"/signin",
 	[
-		check('email').isEmail().withMessage('email is required'),
-		check('password')
+		check("email").isEmail().withMessage("email is required"),
+		check("password")
 			.isLength({
 				min: 1,
 			})
-			.withMessage('Password field is required'),
+			.withMessage("Password field is required"),
 	],
 	authHandler.signin
 );
 
-router.route('/signout').get(authHandler.signout);
+router.route("/signout").get(authHandler.signout);
 
-router.get('/test', authHandler.isSignedIn, (req, res) => {
-	res.send(req.auth);
-});
 module.exports = router;
